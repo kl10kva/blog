@@ -45,7 +45,7 @@ class SubscribeBlog(models.Model):
     )
     user = models.ForeignKey(User, verbose_name = "Пользователь", on_delete = models.CASCADE)
     blog = models.ForeignKey(Blog, verbose_name = "Блог", on_delete = models.CASCADE)
-    status = models.BooleanField(choices = STATUS, verbose_name = "Статус подписки")
+    status = models.BooleanField(choices = STATUS, default = False, verbose_name = "Статус подписки")
 
     def __str__(self):
         return "%s: %s (%s)" % (self.user, self.blog, self.status)
@@ -61,7 +61,7 @@ class MarkPost(models.Model):
     )
     subscribe_blog = models.ForeignKey(SubscribeBlog, verbose_name = "Подписка", on_delete = models.CASCADE)
     post = models.ForeignKey(Post, verbose_name = "Пост", on_delete = models.CASCADE)
-    status = models.BooleanField(choices = STATUS, verbose_name = "Статус")
+    status = models.BooleanField(choices = STATUS, default = False, verbose_name = "Статус")
 
     def __str__(self):
         return "%s: %s (%s)" % (self.subscribe_blog, self.post, self.status)
