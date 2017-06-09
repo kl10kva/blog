@@ -5,7 +5,7 @@
     <title>home</title>
 </head>
 <body>
-   <form action="{% url 'blogs:add_post' blog_id %}" method='POST'>
+   <form action="{% url 'blogs:edit_post' pk %}" method='POST'>
    {% csrf_token %}
    {{ form.as_p }}
    <input type="Submit">

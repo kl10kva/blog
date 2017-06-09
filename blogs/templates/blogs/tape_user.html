@@ -5,7 +5,24 @@
     <title>home</title>
 </head>
 <body>
-  
-  <p>{{ user.first_name }} {{ user.last_name }}</p>
+  <h1> Профиль пользователя:  {{ my_blog.user }}</h1>
+
+  <p>Мой блог: <a href="{% url 'blogs:blog' my_blog.id %}">{{ my_blog.title }}</a>
+              [<a href="{% url 'blogs:add_post' my_blog.id %}">Добавить новый пост</a>]
+  </p>
+
+  <p>Список остальных блогов:</p>
+  {% for blog_elem, status_elem in container %}
+  {% if blog_elem != my_blog %}
+  <ul>
+    <li><a href="{% url 'blogs:blog' blog_elem.id%}">{{ blog_elem.title }}</a>
+    {% if status_elem %} <a href="/del_subscribe_blog/{{ my_blog.id }}/{{ blog_elem.id }}">Отписаться</a>
+    {% else %} <a href="/add_subscribe_blog/{{ my_blog.id }}/{{ blog_elem.id }}">Подписаться</a>
+    {% endif %}
+    </li>
+  </ul>
+  {% endif %}
+  {% endfor %}
+
 </body>
 </html>

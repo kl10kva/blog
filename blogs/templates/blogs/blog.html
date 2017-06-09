@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+</head>
+<body>
+  <h1>Блог: {{ blog.title }}</h1>
+  <h1>Автор: {{ blog.user }} </h1>
+  <h1>Описание блога: {{ blog.description }}</h1>
+
+  <p>Список постов данного блога:</p>
+  {% for post in posts %}
+  <ul>
+    <li>{{ post.title }}: {{ post.description }}.
+      
+       [<a href="{% url 'blogs:del_post' post.id %}">Удалить пост</a>]
+     </li>
+  </ul>
+  {% empty %} <p>Список постов пуст</p>
+  {% endfor %}
+
+</body>
+</html>
