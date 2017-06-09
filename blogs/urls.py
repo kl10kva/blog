@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import AddPostView, TapeUserView, PostsBlogView, AddSubscribeBlogView, DelSubscribeBlogView
+from .views import AddPostView, TapeUserView, PostsBlogView, AddSubscribeBlogView, DelSubscribeBlogView, MarkPostView
 
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from .models import User, Blog, Post
@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^del_post/(?P<pk>\d+)/$', DeleteView.as_view(model = Post, template_name = 'blogs/del_post.html', success_url = '/'), name = 'del_post'),
     url(r'^add_subscribe_blog/(?P<user_id>\d+)/(?P<blog_id>\d+)/$', AddSubscribeBlogView, name = 'add_subscribe_post'),
     url(r'^del_subscribe_blog/(?P<user_id>\d+)/(?P<blog_id>\d+)/$', DelSubscribeBlogView, name = 'del_subscribe_post'),
+    url(r'^mark_post/(?P<post_id>\d+)/(?P<user_id>\d+)/$', MarkPostView, name = 'mark_post'),
 
     # url(r'^edit_post/(?P<pk>\d+)/$', UpdateView.as_view(model = Post, template_name = 'blogs/edit_post.html', success_url = '/'), name='edit_post'),
 

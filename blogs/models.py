@@ -15,7 +15,7 @@ class User(models.Model):
 
 class Blog(models.Model):
     """Информация о блогах"""
-    user = models.ForeignKey(User, verbose_name = "Пользователь", on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name = "Пользователь",)
     title = models.CharField(max_length = 40, unique = True, verbose_name = "Наименование блога")
     description = models.TextField(verbose_name = "Описание блога")
     creation_date = models.DateField(auto_now_add = True)
@@ -26,7 +26,7 @@ class Blog(models.Model):
 
 class Post(models.Model):
     """Информация о постах"""
-    blog = models.ForeignKey(Blog, verbose_name = "Блог", on_delete = models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE, verbose_name = "Блог", )
     title = models.CharField(max_length = 40, unique = True, verbose_name = "Наименование поста")
     description = models.TextField(verbose_name = "Содержание поста")
     creation_date = models.DateField(auto_now_add = True)
@@ -38,8 +38,8 @@ class Post(models.Model):
 class SubscribeBlog(models.Model):
     """Информация о подписках пользователей на блоги"""
 
-    user = models.ForeignKey(User, verbose_name = "Пользователь", on_delete = models.CASCADE)
-    blog = models.ForeignKey(Blog, verbose_name = "Блог", on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, verbose_name = "Пользователь", )
+    blog = models.ForeignKey(Blog, on_delete = models.CASCADE, verbose_name = "Блог",)
 
     def __str__(self):
         return "%s: %s (%s)" % (self.user, self.blog, self.status)
@@ -47,31 +47,11 @@ class SubscribeBlog(models.Model):
 
 class MarkPost(models.Model):
     """Информация о помеченных пользователем постах"""
-    NOT_READ = False
-    READ = True
-    STATUS = (
-        (NOT_READ, "Не прочитано"),
-        (READ, "Прочитано")
-    )
-    subscribe_blog = models.ForeignKey(SubscribeBlog, verbose_name = "Подписка", on_delete = models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name = "Пост", on_delete = models.CASCADE)
-    status = models.BooleanField(choices = STATUS, default = False, verbose_name = "Статус")
+
+    # subscribe_blog = models.ForeignKey(SubscribeBlog, verbose_name = "Подписка", on_delete = models.CASCADE)
+    post = models.ForeignKey(Post, on_delete = models.CASCADE, verbose_name = "Пост", )
+    user_id = models.PositiveIntegerField(null = True, blank = True, verbose_name = "ID пользователя")
 
     def __str__(self):
         return "%s: %s (%s)" % (self.subscribe_blog, self.post, self.status)
 
-
-# class SubscribeBlog(models.Model):
-#     """Информация о подписках пользователей на блоги"""
-#     NOT_SIGNED = False
-#     SIGNED = True
-#     STATUS = (
-#         (NOT_SIGNED, "Не подписан"),
-#         (SIGNED, "Подписан")
-#     )
-#     user = models.ForeignKey(User, verbose_name = "Пользователь", on_delete = models.CASCADE)
-#     blog = models.ForeignKey(Blog, verbose_name = "Блог", on_delete = models.CASCADE)
-#     status = models.BooleanField(choices = STATUS, default = False, verbose_name = "Статус подписки")
-#
-#     def __str__(self):
-#         return "%s: %s (%s)" % (self.user, self.blog, self.status)

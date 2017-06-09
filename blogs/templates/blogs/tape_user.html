@@ -11,8 +11,22 @@
               [<a href="{% url 'blogs:add_post' my_blog.id %}">Добавить новый пост</a>]
   </p>
 
+  <p>Лента:</p>
+  {% if containerPosts %}
+  {% for post_elem, status_elem in containerPosts %}
+  <ul>
+    <li>{{ post_elem.title }}: {{ post_elem.description }} [Статус:
+      {% if status_elem %} Прочтено]
+      {% else %} <a href="/mark_post/{{ post_elem.id }}/{{ my_blog.user.id }}">Отметить как "Прочтено"]</a>
+      {% endif %}
+    </li>
+  </ul>
+  {% endfor %}
+  {% else %} Лента пуста
+  {% endif %}
+
   <p>Список остальных блогов:</p>
-  {% for blog_elem, status_elem in container %}
+  {% for blog_elem, status_elem in containerBlogs %}
   {% if blog_elem != my_blog %}
   <ul>
     <li><a href="{% url 'blogs:blog' blog_elem.id%}">{{ blog_elem.title }}</a>
